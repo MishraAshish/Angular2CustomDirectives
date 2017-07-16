@@ -1,16 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { UiEditorComponent } from './ui-editor/ui-editor.component';
+import { EditorToolsComponent } from './editor-tools/editor-tools.component';
+import { MakeBoldDirective } from './make-bold.directive';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot([
+      {path:"editor", component:UiEditorComponent}
+    ])
   ],
+  declarations: [
+    AppComponent,
+    UiEditorComponent,
+    EditorToolsComponent,
+    MakeBoldDirective
+  ],
+  
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent]  
 })
 export class AppModule { }
