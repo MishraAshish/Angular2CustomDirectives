@@ -1,1 +1,13 @@
-<button (click)="Boldify(isBold)">MakeBold</button>
+<div class="EditorTool">
+    <div class="editorControls dn">
+        <app-editor-tool-bold *ngIf="toolsConfiguration.isBold"></app-editor-tool-bold>
+        <app-editor-tool-italic *ngIf="toolsConfiguration.isItalic"></app-editor-tool-italic>
+        <app-editor-tool-underline *ngIf="toolsConfiguration.isUnderline"></app-editor-tool-underline>
+        <app-editor-tool-bullet *ngIf="toolsConfiguration.isBullet"></app-editor-tool-bullet>        
+        <app-editor-tool-undo *ngIf="toolsConfiguration.isUndo"></app-editor-tool-undo>
+        <app-editor-tool-redo *ngIf="toolsConfiguration.isRedo"></app-editor-tool-redo>  
+    </div>
+    <div class="editableContent" (focusout)="focusOutFunction()" >         
+        <ng-content [(ngModel)]="editorContent"></ng-content>
+    </div>
+</div>

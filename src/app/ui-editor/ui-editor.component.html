@@ -1,4 +1,10 @@
-<editor-tools></editor-tools>
-<p [appMakeBold]="isBold">
-  ui-editor works!
-</p>
+<editor-tools>      
+  {{editorContent}}
+   <!--<div>{{editorContent}}</div>-->
+</editor-tools>
+
+<editor-tools>      
+  {{editorContentTemp}}   
+</editor-tools>
+
+ <p>This text needs to be appended to editor tool. <button (click)="addContent()">Add</button></p>

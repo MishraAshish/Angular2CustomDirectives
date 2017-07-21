@@ -1,0 +1,7 @@
+DIV.editableContent[contenteditable="true"] {
+    border: 1px solid cornflowerblue;
+}
+
+.dn{
+    display: none;
+}
