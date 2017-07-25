@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-editor-tool-redo',
@@ -6,13 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./editor-tool-redo.component.css']
 })
 export class EditorToolRedoComponent implements OnInit {
-
+  
+  @Input() changedContent;
   constructor() { }
 
   ngOnInit() {
   }
 
-  SetRedo(){
+  SetRedo(){        
       document.execCommand("redo",false,null)
   }
 

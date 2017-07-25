@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
 
 @Component({
   selector: 'app-editor-tool-undo',
@@ -7,13 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditorToolUndoComponent implements OnInit {
 
-  constructor() { }
+  @Input() changedContent;
 
-  ngOnInit() {
+  constructor(private elementRef: ElementRef) { }
+
+  ngOnInit(){
   }
 
-  SetUndo(){
-      document.execCommand("undo",false,null)
+  // Undoes the changes made in editable document mode (need to add logic to check for any change made through external entity (+) and undo that)
+  SetUndo(){      
+      document.execCommand("undo",false,null);      
   }
 
 }

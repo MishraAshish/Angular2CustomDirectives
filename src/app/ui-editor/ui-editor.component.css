@@ -1,0 +1,17 @@
+DIV.editorContent{
+    margin-top: 10px;    
+}
+
+.appendingContent p{
+    background-color: bisque;
+    float: left;
+}
+.appendingContent button{
+    margin-top: 15px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.clearLeft{
+    clear: left;
+}

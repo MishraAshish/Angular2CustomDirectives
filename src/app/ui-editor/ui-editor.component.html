@@ -1,10 +1,18 @@
-<editor-tools>      
-  {{editorContent}}
-   <!--<div>{{editorContent}}</div>-->
-</editor-tools>
+<div class="editorContent">
+  <editor-tools [editorContent]="editorContent" [toolsConfiguration]="toolsConfiguration">
+    {{editorContent}}   
+  </editor-tools>
 
-<editor-tools>      
-  {{editorContentTemp}}   
-</editor-tools>
-
- <p>This text needs to be appended to editor tool. <button (click)="addContent()">Add</button></p>
+  <editor-tools [toolsConfiguration]="toolsConfiguration">      
+    {{editorContentTemp}}   
+  </editor-tools>
+<div>
+ 
+ <!-- <div class="appendingContent"> 
+   <p>This text needs to be appended to editor tool.</p>
+   <button (click)="addContent($event)">&#43;</button>
+ </div> -->
+  
+ <div class="clearLeft">
+   <button (click)="saveData($event)">GetHtml</button>
+ </div>

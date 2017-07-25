@@ -10,34 +10,67 @@ import { EditorToolConfiguration } from '../editor-tools/editor-tools.configurat
 })
 export class UiEditorComponent implements OnInit {
 
-  public editorContent: string = "ui-editor works!"; // Web content to be shown on the html page
-
+  public editorContent: string ; // Web content to be shown on the html page
   public editorContentTemp: string = "Yes Temporary ui-editor works!";
+  public toolsConfiguration: EditorToolConfiguration;
 
   constructor(private elementRef: ElementRef, //Element Class to get the exact emelent this component rendered upon
-                private renderer: Renderer, // To Be used to re-render the DOM after tweaks
-                private toolsConfiguration: EditorToolConfiguration) //Setting the configuration to show or hide editor controls on the UI through tools
+                private renderer: Renderer // To Be used to re-render the DOM after tweaks
+                //private toolsConfiguration: EditorToolConfiguration //Setting the configuration to show or hide editor controls on the UI through tools
+              )               
   { 
-    toolsConfiguration.isBold = true;   
-    toolsConfiguration.isItalic = true;    
-    toolsConfiguration.isUnderline = true;
-    toolsConfiguration.isBullet = true;
-    toolsConfiguration.isUndo = true;
-    toolsConfiguration.isRedo = true;
+    // this.toolsConfiguration.isBold = true;   
+    // this.toolsConfiguration.isItalic = true;    
+    // this.toolsConfiguration.isUnderline = true;
+    // this.toolsConfiguration.isBullet = true;
+    // this.toolsConfiguration.isUndo = true;
+    // this.toolsConfiguration.isRedo = true;
   }
 
    ngOnInit(){
-     console.log(this.editorContent);
+      console.log(this.editorContent);
+      this.toolsConfiguration = new EditorToolConfiguration();
+      this.toolsConfiguration.isBold = true;   
+      this.toolsConfiguration.isItalic = true;    
+      this.toolsConfiguration.isUnderline = true;
+      this.toolsConfiguration.isBullet = true;
+      this.toolsConfiguration.isUndo = true;
+      this.toolsConfiguration.isRedo = true;
+
+      this.editorContent = "ui-editor works!";
    }
 
-   saveData()
+   //Below function to be used to get Html while saving
+   saveData(event)
    {
-      console.log(this.editorContent);      
+      let editableContentColl = this.elementRef.nativeElement.querySelectorAll("div.editableContent");
+      let newHtml = [];
+      if(editableContentColl && editableContentColl.length > 0){
+        for (var index = 0; index < editableContentColl.length; index++) {
+          newHtml.push(editableContentColl[index].innerHTML);          
+        }
+      }
+      alert(newHtml.join(""));
+      //debugger;
+      console.log(newHtml.join(""));      
    }  
 
-   addContent(){
-     var activeComponent = this.elementRef.nativeElement.parentElement.querySelector("DIV.editableContent[contenteditable='true']");
-     activeComponent.innerHTML = activeComponent.innerHTML + "<b>Test Me</b>";
-     debugger;
+   //Below function adds the selected html to the editable content
+   addContent(event){
+     let activeComponent = this.elementRef.nativeElement.parentElement.querySelector("DIV.editableContent[contenteditable='true']");
+
+     if(activeComponent){               
+        
+        let range = document.createRange();
+        var sel = window.getSelection();      
+        range.setStart(activeComponent.childNodes[1], activeComponent.childNodes[1].length);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        let target = event.target || event.srcElement || event.currentTarget;               
+        document.execCommand('insertHTML', false, target.previousElementSibling.innerHTML);
+        this.toolsConfiguration.setUndoRedo();
+      }
    }
 }

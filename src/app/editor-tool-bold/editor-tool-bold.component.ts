@@ -12,6 +12,6 @@ export class EditorToolBoldComponent implements OnInit {
   ngOnInit() {} 
 
   Boldify(){
-    document.execCommand("bold",false,null);    
+    document.execCommand("bold",false,null);        
   }
 }
