@@ -19,10 +19,10 @@ export class EditorToolConfiguration {
     let canUndo = document.execCommand("undo", false, null);
     let canRedo = document.execCommand("redo", false, null);
     
-    let activeComponent = document.querySelector("DIV.editableContent[contenteditable='true']");
+    let activeComponent = document.querySelector("editor-tools .editableContent[contenteditable='true']");
     let undoButton = activeComponent.previousElementSibling.querySelector("app-editor-tool-undo button");
     let redoButton = activeComponent.previousElementSibling.querySelector("app-editor-tool-redo button");
-    
+
     //Undo Button Enable Disable
     if(undoButton && canUndo)
         (<HTMLInputElement>undoButton).disabled = false;

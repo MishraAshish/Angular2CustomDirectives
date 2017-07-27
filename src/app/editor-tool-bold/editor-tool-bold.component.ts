@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EditorToolConfiguration } from '../editor-tools/editor-tools.configuration';
 
 @Component({
   selector: 'app-editor-tool-bold',
@@ -12,6 +13,8 @@ export class EditorToolBoldComponent implements OnInit {
   ngOnInit() {} 
 
   Boldify(){
-    document.execCommand("bold",false,null);        
+    document.execCommand("bold",false,null);
+    let editorToolConfiguration = new EditorToolConfiguration();
+    editorToolConfiguration.setUndoRedo();
   }
 }

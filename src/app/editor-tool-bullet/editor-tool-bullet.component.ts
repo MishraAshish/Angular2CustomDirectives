@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EditorToolConfiguration } from '../editor-tools/editor-tools.configuration';
 
 @Component({
   selector: 'app-editor-tool-bullet',
@@ -13,10 +14,39 @@ export class EditorToolBulletComponent implements OnInit {
   }  
   
   //This is working quite close to expectation
-  SetBulleted(){
+  SetBulleted(){      
       document.execCommand("insertUnorderedList",false,null);      
+      let editorToolConfiguration = new EditorToolConfiguration();
+      editorToolConfiguration.setUndoRedo();      
   }
 
+  //This is working quite close to expectation
+  SetLeft(){      
+      document.execCommand("justifyLeft",false,null);      
+      let editorToolConfiguration = new EditorToolConfiguration();
+      editorToolConfiguration.setUndoRedo();      
+  }
+
+  //This is working quite close to expectation
+  SetRight(){      
+      document.execCommand("justifyRight",false,null);      
+      let editorToolConfiguration = new EditorToolConfiguration();
+      editorToolConfiguration.setUndoRedo();      
+  }
+
+  //This is working quite close to expectation
+  SetCenter(){      
+      document.execCommand("justifyCenter",false,null);      
+      let editorToolConfiguration = new EditorToolConfiguration();
+      editorToolConfiguration.setUndoRedo();      
+  }
+
+     //This is working quite close to expectation
+  SetFull(){      
+      document.execCommand("justifyFull",false,null);      
+      let editorToolConfiguration = new EditorToolConfiguration();
+      editorToolConfiguration.setUndoRedo();      
+  }
 
 
   getCursorPosition() {

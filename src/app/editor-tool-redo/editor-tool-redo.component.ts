@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { EditorToolConfiguration } from '../editor-tools/editor-tools.configuration';
 
 @Component({
   selector: 'app-editor-tool-redo',
@@ -14,7 +15,9 @@ export class EditorToolRedoComponent implements OnInit {
   }
 
   SetRedo(){        
-      document.execCommand("redo",false,null)
+      document.execCommand("redo",false,null);
+      let editorToolConfiguration = new EditorToolConfiguration();
+      editorToolConfiguration.setUndoRedo();
   }
 
 }

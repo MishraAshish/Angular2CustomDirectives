@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EditorToolConfiguration } from '../editor-tools/editor-tools.configuration';
 
 @Component({
   selector: 'app-editor-tool-italic',
@@ -14,6 +15,8 @@ export class EditorToolItalicComponent implements OnInit {
 
    Italify(){
     document.execCommand("italic",false,null);
+    let editorToolConfiguration = new EditorToolConfiguration();
+    editorToolConfiguration.setUndoRedo();
   }
 
 }

@@ -27,16 +27,18 @@ export class EditorToolsComponent implements OnInit {
       this.componentElement = renderer.selectRootElement(this); //will have component root element     
   }
 
-  ngOnInit(){}
+  ngOnInit(){
+    console.log(this.editorContent);
+  }
 
   @HostListener('click') click() {
-    let contentElement = this.elementRef.nativeElement.querySelector("DIV.editableContent");
+    let contentElement = this.elementRef.nativeElement.querySelector("editor-tools .editableContent");
       
-    let undoButton = contentElement.previousElementSibling.querySelector("app-editor-tool-undo button");      
+    let undoButton = contentElement.previousElementSibling.querySelector("app-editor-tool-undo button");         
 
     if(contentElement && contentElement.contentEditable != "true")
     {        
-      let activeComponents = this.elementRef.nativeElement.parentElement.querySelectorAll("DIV.editableContent[contenteditable='true']");        
+      let activeComponents = this.elementRef.nativeElement.parentElement.querySelectorAll("editor-tools .editableContent[contenteditable='true']");        
       if(activeComponents && activeComponents.length > 0)
       {
         let loopLength = activeComponents.length;
@@ -57,12 +59,14 @@ export class EditorToolsComponent implements OnInit {
   }
 
   // Needs Little more modification for further use
-  focusOutFunction(evt) {
-          //debugger;
-          let activeComponents = this.elementRef.nativeElement.parentElement.querySelectorAll("DIV.editableContent[contenteditable='true']");
-          alert(this.editorContent);
-      //    this.elementRef.nativeElement.querySelector("DIV.editableContent").contentEditable = false;     
-      //    this.isEditing = false;      
+  focusOutFunction(evt) {            
+      //console.log(this.editorContent);      
+      //console.log(evt.target.innerHTML);
+      //this.editorContent = "This is a new text implemented";
+      // let activeComponents = this.elementRef.nativeElement.parentElement.querySelectorAll("DIV.editableContent[contenteditable='true']");
+      //alert(this.editorContent);
+      //this.elementRef.nativeElement.querySelector("DIV.editableContent").contentEditable = false;     
+      //this.isEditing = false;      
   }
 
 }

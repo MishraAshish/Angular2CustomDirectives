@@ -43,7 +43,7 @@ export class UiEditorComponent implements OnInit {
    //Below function to be used to get Html while saving
    saveData(event)
    {
-      let editableContentColl = this.elementRef.nativeElement.querySelectorAll("div.editableContent");
+      let editableContentColl = this.elementRef.nativeElement.querySelectorAll("editor-tools .editableContent");
       let newHtml = [];
       if(editableContentColl && editableContentColl.length > 0){
         for (var index = 0; index < editableContentColl.length; index++) {
@@ -55,18 +55,40 @@ export class UiEditorComponent implements OnInit {
       console.log(newHtml.join(""));      
    }  
 
+   getTopNode(activeComponent: any){
+      if (activeComponent) {
+        if(activeComponent.childNodes && activeComponent.childNodes.length > 0){
+            let nodeLength = activeComponent.childNodes.length - 1;            
+            if (activeComponent.childNodes[nodeLength].nodeType == 3 || activeComponent.childNodes[nodeLength].nodeName == "BR") {
+              return activeComponent.childNodes[nodeLength];
+            } else {
+              this.getTopNode(activeComponent.childNodes[nodeLength]);
+            }
+        } else {
+          return activeComponent;
+        }
+      }
+   }
+
    //Below function adds the selected html to the editable content
    addContent(event){
-     let activeComponent = this.elementRef.nativeElement.parentElement.querySelector("DIV.editableContent[contenteditable='true']");
+    //debugger;
+    let activeComponent = this.elementRef.nativeElement.parentElement.querySelector("editor-tools .editableContent[contenteditable='true']");
+    let target = event.target || event.srcElement || event.currentTarget;
 
      if(activeComponent){               
         
         let range = document.createRange();
-        var sel = window.getSelection();      
-        range.setStart(activeComponent.childNodes[1], activeComponent.childNodes[1].length);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
+        var sel = window.getSelection();
+
+        let myNode = this.getTopNode(activeComponent);
+        
+        if (myNode) {
+          range.setStart(myNode, myNode.textContent.length);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);  
+        }       
 
         let target = event.target || event.srcElement || event.currentTarget;               
         document.execCommand('insertHTML', false, target.previousElementSibling.innerHTML);
@@ -74,3 +96,66 @@ export class UiEditorComponent implements OnInit {
       }
    }
 }
+
+
+// Deprecated code
+
+//Below Logic needs to be rectified and optimized once identified all the use cases
+//debugger;
+
+// if(activeComponent.childNodes && activeComponent.childNodes.length > 0){
+//   let currentLength = activeComponent.childNodes.length - 1;
+//   if(activeComponent.childNodes[currentLength].nodeName == "UL" || 
+//     (activeComponent.childNodes[currentLength].innerHTML && 
+//       activeComponent.childNodes[currentLength].innerHTML.toUpperCase().indexOf("<UL>") > -1))
+//   {            
+//     let topNode = activeComponent.childNodes[currentLength];
+//     let topNodeLength = topNode.childNodes.length - 1;
+
+//     if (topNode.childNodes[topNodeLength].nodeName == "UL") 
+//     {
+//         topNode = topNode.childNodes[topNodeLength];
+        
+//         let LINodes = topNode.childNodes;
+//         let newLength = LINodes.length - 1;
+        
+//         if (LINodes[newLength].childNodes.length > 0) {
+//           let lnth = LINodes[newLength].childNodes.length-1;
+//           if (LINodes[newLength].childNodes[lnth] && 
+//             (LINodes[newLength].childNodes[lnth].childNodes == undefined || LINodes[newLength].childNodes[lnth].childNodes.length == 0 )) {                    
+//             range.setStart(LINodes[newLength].childNodes[lnth], 
+//                 (LINodes[newLength].childNodes[lnth].innerText != undefined ? 
+//                   LINodes[newLength].childNodes[lnth].innerText.length : LINodes[newLength].childNodes[lnth].textContent.length));  
+//           } 
+//           else if(LINodes[newLength].childNodes[lnth].childNodes.length > 0) {
+//             let newlnth = LINodes[newLength].childNodes[lnth].childNodes.length - 1;
+//             range.setStart(LINodes[newLength].childNodes[lnth].childNodes[newlnth], 
+//               LINodes[newLength].childNodes[lnth].childNodes[newlnth].innerText != undefined ?
+//               LINodes[newLength].childNodes[lnth].childNodes[newlnth].innerText.length : LINodes[newLength].childNodes[lnth].childNodes[newlnth].textContent.length );  
+//           }                  
+//         }else{                
+//           range.setStart(LINodes[newLength].childNodes[0], LINodes[newLength].childNodes[0].innerText.length);
+//         }
+//     } 
+//     else {
+//       if(topNode.childNodes[topNodeLength].innerText && topNode.childNodes[topNodeLength].innerText.trim() != ""){                
+//         range.setStart(topNode.childNodes[topNodeLength].childNodes[0], topNode.childNodes[topNodeLength].innerText.length);
+//       } else{
+//         range.setStart(topNode.childNodes[topNodeLength], topNode.childNodes[topNodeLength].textContent.length);              
+//       }   
+//     }     
+//   } else {
+//     if(activeComponent.childNodes[currentLength].innerText && activeComponent.childNodes[currentLength].innerText.trim() != ""){
+//       let lnth = activeComponent.childNodes[currentLength].childNodes.length - 1;
+//       if (activeComponent.childNodes[currentLength].childNodes[lnth].hasChildNodes()) {
+//         let currenNode = activeComponent.childNodes[currentLength].childNodes[lnth].childNodes;
+//         lnth = currenNode.length - 1;                
+//         range.setStart(currenNode[lnth], currenNode[lnth].textContent.length);
+//       } else {
+//         range.setStart(activeComponent.childNodes[currentLength].childNodes[lnth], activeComponent.childNodes[currentLength].childNodes[lnth].textContent.length);
+//     }
+//     }else{
+//       range.setStart(activeComponent.childNodes[currentLength], activeComponent.childNodes[currentLength].textContent.length);              
+//     }
+//   }
+// }       

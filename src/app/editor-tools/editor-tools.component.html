@@ -7,9 +7,7 @@
         <app-editor-tool-undo [changedContent]="changedContent" *ngIf="toolsConfiguration.isUndo"></app-editor-tool-undo>
         <app-editor-tool-redo [changedContent]="changedContent" *ngIf="toolsConfiguration.isRedo"></app-editor-tool-redo>  
     </div>
-    <div class="editableContent" (focusout)="focusOutFunction()" [(innerHTML)]="editorContent">
-        <!-- {{editorContent}} -->
-        <!-- <ng-content>            
-        </ng-content> -->
-    </div>    
+    <div class="editableContent" (focusout)="focusOutFunction($event)" [(innerHTML)]="editorContent" >         
+        <ng-content></ng-content>
+    </div>
 </div>
